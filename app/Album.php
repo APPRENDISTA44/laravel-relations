@@ -15,4 +15,7 @@ class Album extends Model
   public function songs(){
     return $this->hasMany('App\Song');
   }
+  public function tags() {
+     return $this->belongsToMany('App\Tag');
+   }
 }
