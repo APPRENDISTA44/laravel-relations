@@ -9,6 +9,17 @@
   @endforeach
 </ul>
 
+@if(!$album->tags->isEmpty())
+	<div>
+		<h3>Tags</h3>
+		<ul>
+			@foreach ($album->tags as $tag)
+				<li>{{ $tag->name }}</li>
+			@endforeach
+		</ul>
+	</div>
+@endif
+
 <div>
   <a href="{{ route('album.index') }}">Home</a>
 </div>

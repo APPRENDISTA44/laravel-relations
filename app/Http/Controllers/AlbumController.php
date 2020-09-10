@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Album;
-use App\Song;
 use App\Tag;
+use App\Song;
+
 
 class AlbumController extends Controller
 {
@@ -60,7 +61,11 @@ class AlbumController extends Controller
      */
     public function edit(Album $album)
     {
-      
+      $tags = Tag::all();
+      return view('albums.edit',[
+        'album'=> $album,
+        'tags' => $tags,
+      ]);
     }
 
     /**
@@ -70,9 +75,19 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Album $album)
     {
-        //
+      $data = $request->all();
+
+      if (isset($data['tags'])) {
+          $album->tags()->sync($data['tags']);
+        } else {
+          $album->tags()->detach();
+        }
+
+        $album->update($data);
+
+        return redirect()->route('album.show', $album);
     }
 
     /**

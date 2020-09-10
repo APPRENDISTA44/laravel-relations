@@ -1,33 +1,29 @@
 <h1>Modifica il tuo post</h1>
 
-<form action="{{ route('album.update', $post) }}" method="post">
+<form action="{{ route('album.update', $album) }}" method="post">
 	@csrf
 	@method('PUT')
 
 	<div>
 		<label>Title</label>
-		<input type="text" name="title" value="{{ $post->title }}">
+		<input type="text" name="title" value="{{ $album->title }}">
+	</div>
+
+  <div>
+		<label>Title</label>
+		<input type="text" name="artist" value="{{ $album->artist }}">
 	</div>
 
 	<div>
-		<label>Content</label>
-		<textarea name="content" rows="8" cols="80">{{ $post->content }}</textarea>
+		<label>Year</label>
+    <input type="number" name="year" value="{{ $album->year }}">
 	</div>
 
 	<div>
-		<label>User</label>
-		<select name="user_id">
-			@foreach ($users as $user)
-				<option value="{{ $user->id }}" {{ ($user->id == $post->user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
-			@endforeach
-		</select>
-	</div>
-
-	<div>
-		@foreach ($categories as $category)
+		@foreach ($tags as $tag)
 			<div>
-				<input type="checkbox" name="categories[]" {{ ($post->categories->contains($category)) ? 'checked' : '' }} value="{{ $category->id }}">
-				<span>{{ $category->name }}</span>
+				<input type="checkbox" name="tags[]" {{ ($album->tags->contains($tag)) ? 'checked' : '' }} value="{{ $tag->id }}">
+				<span>{{ $tag->name }}</span>
 			</div>
 		@endforeach
 	</div>
